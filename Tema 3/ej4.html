@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DWEC Tema 3 Ejercicio</title>
+    <h3>Ejercicio 3: Cálculo de primas</h3>
+  </head>
+  <body>
+    <button onclick="calcularPrima();">Empezar</button>
+    <script>
+      /* Pedir sueldo y antigüedad y calcular prima de la siguiente forma:
+            Sueldo < 750, ant >= 10 = prima 10%
+            Sueldo >= 750, ant >= 10 = prima 5%
+            Ant < 10 = no hay prima
+
+            Ejemplos:
+            - 1. 740 y 12 años de antigüedad
+            - 2. 
+            */
+      function calcularPrima() {
+        var sueldo = parseFloat(prompt("Introduzca el sueldo del empleado en euros: "));
+        var antiguedad = parseInt(prompt("Introduzca la antigüedad del trabajador en años: "));
+        var prima = 0.00;
+        // 
+        if (antiguedad >= 10) {
+            if (sueldo >= 750) {
+                prima = 0.05;
+            }
+            else prima = 0.10;
+        }
+        var valorFinal = (sueldo + (sueldo * prima));
+        alert("Este empleado obtendrá un valor final de " + valorFinal.toFixed(2) + " € mensuales.");
+      }
+    </script>
+  </body>
+</html>
