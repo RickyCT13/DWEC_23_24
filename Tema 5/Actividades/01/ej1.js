@@ -1,7 +1,7 @@
 function principal() {
     // Pedir entradas y mostrar todos los datos
-    var valores = [];
-    var entrada = 0;
+    let valores = [];
+    let entrada = 0;
     while(true) {
         entrada = prompt("Introduzca números enteros desde el 0");
         if (entrada == null || entrada == "") {
@@ -18,35 +18,29 @@ function principal() {
 }
 
 function media(valores) {
-    var total = 0;
-    for (var i = 0; i < valores.length; i++) {
+    let total = 0;
+    for (let i = 0; i < valores.length; i++) {
         total += valores[i];
     }
-    return (total / valores.length);
+    return ((total / valores.length).toFixed(2));
 }
 
 function rango(valores) {
-    return (averiguarMayor(valores) - averiguarMenor(valores));
-}
-
-function averiguarMayor(valores) {
-    var mayor = valores[0];
-    for (var i = 0; i < valores.length; i++) {
+    if (valores.length === 0) {
+        return 0;
+    }
+    let mayor = valores[0];
+    let menor = valores[0];
+    for (let i = 0; i < valores.length; i++) {
         if (mayor < valores[i]) {
             mayor = valores[i];
         }
-    }
-    return mayor;
-}
 
-function averiguarMenor(valores) {
-    var menor = valores[0];
-    for (var i = 0; i < valores.length; i++) {
         if (menor > valores[i]) {
             menor = valores[i];
         }
     }
-    return menor;
+    return mayor - menor;
 }
 
 // Caso 1: No hay moda
@@ -57,17 +51,18 @@ function averiguarMenor(valores) {
 */ 
 
 function moda(valores) {
-    // Contar ocurrencias de todos los numeros
-    // Contar la mayor ocurrencia
-    var masFrecuente = 0;
-    for (var i = 0; i < valores.length; i++) {
-
+    if (valores.length === 0) {
+        return "N/A";
     }
+    let moda = [];
+    let contadorMax = 0;
+    
+    
 }
 
 function contarOcurrencias(valores, elemento) {
-    var ocurrencias = 0;
-    for (var i = 0; i < valores.length; i++) {
+    let ocurrencias = 0;
+    for (let i = 0; i < valores.length; i++) {
         if (valores[i] == elemento) {
             ocurrencias++;
         }
@@ -76,8 +71,8 @@ function contarOcurrencias(valores, elemento) {
 }
 
 function ocurrenciasDeCadaValor(valores) {
-    var valoresOcurrencias = new Array(2, valores.length);
-    for (var i = 0; i < valores.length; i++) {
+    let valoresOcurrencias = new Array(2, valores.length);
+    for (let i = 0; i < valores.length; i++) {
         valoresOcurrencias[0][i] = valores[i];
         valoresOcurrencias[1][i] = contarOcurrencias(valores, valores[i]);
     }
