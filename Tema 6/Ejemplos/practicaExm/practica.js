@@ -11,17 +11,5 @@ function entrada() {
     var zona = 0;
     var terminar = false;
     // Para las zonas
-    while (terminar) {
-        entrada = prompt("introduzca un numero");
-        // Para las temp de cada zona
-        while (true) {
-            if (entrada == "s") {
-                zona++;
-                break;
-            }
-            if (entrada == "f") {
-                return
-            }
-        }
-    }
+    
 };
