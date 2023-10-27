@@ -18,8 +18,8 @@ function principal() {
     alert("Números introducidos: " + numeros +
     "\nMedia: " + media(numeros) +
     "\nRango: " + rango(numeros));
-    var mensaje = moda(numeros);
-    alert(mensaje);
+    alert(moda(numeros));
+    alert(`La mediana es: ${mediana(numeros)}`);
 }
 
 function averiguarMayor(valores) {
@@ -88,4 +88,19 @@ function moda(valores) {
         mensaje = `Las modas son: ${modas.join(', ')}`;
     }
     return mensaje;
+}
+
+function mediana(valores) {
+    var valoresOrdenados = [...valores].sort(function (a, b) {return a - b});
+    var indiceMedio = parseInt(valores.length / 2);
+    var mediana = 0;
+    // Caso 1: El número de datos es par
+    if (valores.length % 2 === 0) {
+        mediana = ((valoresOrdenados[indiceMedio] + valoresOrdenados[indiceMedio - 1]) / 2).toFixed(2);
+    }
+    // Caso 2: El número de datos es impar
+    else {
+        mediana = valoresOrdenados[indiceMedio];
+    }
+    return mediana;
 }
