@@ -38,9 +38,9 @@ function Cesta(...articulos) {
 
         `;
         var cuerpo = `<tbody>`;
-        for (var articulo of this.articulos) {
+        for (articulo of this.articulos) {
             cuerpo += `
-                <tr>
+                <tr align="center">
                     <td>${articulo.codigo}</td>
                     <td>${articulo.nombre}</td>
                     <td>${articulo.precio}</td>
@@ -50,33 +50,47 @@ function Cesta(...articulos) {
             `;
         }
         cuerpo.concat(`</tbody>`);
+        var total = 0;
+        for (var articulo of this.articulos) {
+            total += articulo.subtotal;
+        }
         var pie = `
             <tfoot>
                 <tr>
-                    <td colspan="4">Total</td>
-                    <td>${this.articulos.length}</td>
+                    <td colspan="4" align="right">Total</td>
+                    <td align="center">${total}</td>
                 </tr>
             </tfoot>
         `;
         var contenido = cabecera + cuerpo + pie;
         document.getElementById("cesta").innerHTML = contenido;
     }
-    this.insertar = function (articulo) {
-        this.articulos.push(articulo);
+    this.insertar = function () {
+        var codigo = prompt("Introduzca el código del artículo.");
+        var nombre = prompt("Introduzca el nombre del artículo.");
+        var precio = Number(prompt("Introduzca el precio por unidad del artículo."));
+        var unidades = Number(prompt("Introduzca las unidades disponibles."));
+        var subtotal = precio * unidades;
+        var nuevoArticulo = new Articulo(codigo, nombre, precio, unidades, subtotal);
+        this.articulos.push(nuevoArticulo);
+        this.mostrar();
     }
-    this.eliminar = function (codigo) {
+    this.eliminar = function () {
+        var codigo = prompt("Introduzca el código del artículo que desea eliminar.");
         for (var articulo of this.articulos) {
             if (articulo.codigo == codigo) {
                 this.articulos.splice(this.articulos.indexOf(articulo), 1);
             }
         }
+        this.mostrar();
     }
     this.vaciar = function () {
         this.articulos = [];
+        this.mostrar();
     }
 }
 
-var cesta = new Cesta(
+let cesta = new Cesta(
     new Articulo(123, "Articulo1", 10, 3),
     new Articulo(124, "Artículo2", 5, 3)
 );
@@ -94,6 +108,7 @@ function menu() {
         4. Vaciar cesta
         5. Salir
         `);
+
         switch (parseInt(entrada)) {
             case 1:
                 cesta.mostrar();
@@ -108,12 +123,12 @@ function menu() {
                 cesta.vaciar();
                 break;
             case 5:
-                salir = true;
                 break;
             default:
                 alert("Error: Debe introducir una de las 5 opciones presentadas.");
-
+                continue;
         }
+        salir = true;
     }
 }
 
