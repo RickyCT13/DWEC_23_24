@@ -83,15 +83,72 @@ function Cesta(...articulos) {
         this.articulos.push(new Articulo(codigo, nombre, precio, unidades, subtotal));
         alert("Artículo insertado con éxito.");
     }
+    /** Busca un artículo por código
+     * @method
+     * @param {Number} codigo El código del artículo que se busca.
+     * @returns {Number} El índice del artículo en el array interno o si no se encuentra el artículo.
+     */
+    this.buscar = function (codigo) {
+        for (var articulo of this.articulos) {
+            if (articulo.codigo == codigo) {
+                return this.articulos.indexOf(articulo);
+            }
+        }
+        return false;
+    }
+
+    /** Edita un artículo de la cesta
+     * @method
+     * @param {Number} codigo El código del artículo previo a la edición.
+     */
+    this.editar = function(codigo) {
+        if (this.buscar(codigo) === false) {
+            alert("Error: Artículo no encontrado");
+            return;
+        }
+        var entrada = 0;
+        var salir = false;
+        indice = this.buscar(codigo);
+        while (salir == false) {
+            entrada = prompt(`
+            Indique el valor que desee editar:
+            1. Código.
+            2. Nombre.
+            3. Precio.
+            4. Cantidad.
+            5. Finalizar edición.
+            `);
+            switch(parseInt(entrada)) {
+                case 1:
+                    this.articulos[indice].codigo = parseInt(prompt("Introduzca el nuevo código del artículo."));
+                    break;
+                case 2:
+                    this.articulos[indice].nombre = prompt("Introduzca el nuevo nombre del artículo.");
+                    break;
+                case 3:
+                    this.articulos[indice].precio = Number(prompt("Introduzca el nuevo nombre del artículo."));
+                    break;
+                case 4:
+                    this.articulos[indice].cantidad = parseInt(prompt("Introduzca el nuevo nombre del artículo."));
+                    break;
+                case 5:
+                    salir = true;
+                    break;
+                default:
+                    alert("Error. Debe introducir una opción válida.");
+                    continue;
+            }
+            
+        }
+    }
 
     /** Elimina un artículo de la cesta por código
      * @method
      */
-    this.eliminar = function () {
-        var codigo = parseInt(prompt("Introduzca el código del artículo que desea eliminar."));
-        var indice = this.articulos.findIndex((articulo) => articulo.codigo === codigo);
-        if (indice != -1) {
-            this.articulos.splice(indice, 1);
+    this.eliminar = function (codigo) {
+        
+        if (this.buscar(codigo) !== false) {
+            this.articulos.splice(this.buscar(codigo), 1);
             alert("Artículo eliminado con éxito.");
         }
         else {
@@ -120,6 +177,7 @@ function menu() {
         entrada = prompt(`
         Escoja una opción:
         1. Insertar un articulo.
+        2. Editar un artículo.
         2. Borrar un artículo.
         3. Vaciar cesta.
         4. Salir del menú.
@@ -130,15 +188,22 @@ function menu() {
                 cesta.insertar();
                 cesta.mostrar();
                 break;
+
             case 2:
-                cesta.eliminar();
+                var codigo = parseInt(prompt("Introduzca el código del artículo que desea editar."));
+                cesta.editar(codigo);
                 cesta.mostrar();
                 break;
             case 3:
-                cesta.vaciar();
+                var codigo = parseInt(prompt("Introduzca el código del artículo que desea eliminar."));
+                cesta.eliminar(codigo);
                 cesta.mostrar();
                 break;
             case 4:
+                cesta.vaciar();
+                cesta.mostrar();
+                break;
+            case 5:
                 break;
             default:
                 alert("Error: Debe introducir una de las 5 opciones presentadas.");

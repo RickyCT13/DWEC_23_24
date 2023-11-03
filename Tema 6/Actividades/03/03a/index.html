@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DWEC Tema 6 Tarea 3a</title>
+    <style>
+        .h3--sansSerif {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .p--serif {
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .strong--bold {
+            font-weight: bold;
+        }
+
+        .strong--highlightBlue {
+            color: cornflowerblue;
+        }
+
+        .button--startButton {
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+    <h3 class="h3--sansSerif">DWEC Tema 6, Tarea 3 a)</h3>
+</head>
+
+<body>
+    <p class="p--serif"><strong class="strong--bold">Enunciado</strong>: Realizar un programa JS que cumpla con los
+        siguientes requisitos:
+    <ul>
+        <li>Contenga una clase padre <strong class="strong--highlightBlue">Empleado</strong>, con los atributos <strong
+                class="strong--highlightBlue">nombre</strong>, <strong class="strong--highlightBlue">apellido</strong>,
+            <strong class="strong--highlightBlue">edad</strong>, y un método <strong
+                class="strong--highlightBlue">muestra()</strong> de los cuales sólo <strong
+                class="strong--highlightBlue">edad</strong> es una variable privada. El método mostrará los tres
+            atributos.
+        </li>
+        <li>Una clase hija <strong class="strong--highlightBlue">Profesor</strong> (que hereda de <strong
+                class="strong--highlightBlue">Empleado</strong>), y que posee un atributo <strong
+                class="strong--highlightBlue">cargo</strong> y un método <strong
+                class="strong--highlightBlue">muestraCargo()</strong> el cual mostrará el cargo cuando se invoque.</li>
+        <li>Tras instanciar un objeto <strong class="strong--highlightBlue">Profesor</strong> mostrará el nombre
+            completo, edad y cargo en una ventana emergente (alert) llamando a los métodos correspondientes.</li>
+    </ul>
+    <button class="button--startButton" onclick="main();">Mostrar</button>
+    </p>
+    <script src="tarea3a.js"></script>
+</body>
+
+</html>
