@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta id="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plantilla Bootstrap 5.3.2</title>
+
+    <!-- Bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons 1.11.1 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <style>
+        input:invalid {
+            border: 1px solid red;
+        }
+
+        input:valid {
+            border: 1px solid green;
+        }
+
+        .div--flexRow {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .div--flexColumn {
+            display: flex;
+            flex-direction: column;
+            padding: 0.25em 0.5em;
+        }
+    </style>
+    <script>
+        class BajaVehiculo {
+            constructor() {
+                this.#funcionEvento();
+            }
+            #valida() {
+                var
+                    matricula = document.getElementById("matricula"),
+                    fechaMatriculacion = document.getElementById("fechaMatriculacion"),
+                    numBastidor = document.getElementById("numBastidor"),
+                    nombre = document.getElementById("nombre"),
+                    apellidos = document.getElementById("apellidos"),
+                    domicilio = document.getElementById("domicilio"),
+                    dni = document.getElementById("dni"),
+                    email = document.getElementById("email"),
+                    telefono = document.getElementById("telefono"),
+                    tipoBaja = document.getElementById("tipoBaja");
+
+                if (matricula.validity.pattern) { }
+
+            }
+
+            #funcionEvento() {
+
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Capa Principal -->
+    <div class="container">
+        <header class="pb-3 mb-4 border-bottom">
+            <i class="bi bi-app-indicator"></i>
+            <span class="fs-3">Solicitud de baja de vehículos</span>
+        </header>
+
+
+        <form method="get">
+
+            <legend>Datos del vehículo:</legend>
+            <div class="form-control div--flexRow">
+                <div class="div--flexColumn" style="width: 25%;">
+                    <label>Matrícula:</label>
+                    <input type="text" id="matricula" pattern="[0-9]{4}[A-Z]{3}" required>
+                </div>
+                <div class="div--flexColumn" style="width: 25%;">
+                    <label>Fecha matriculación:</label>
+                    <input type="date" id="fechaMatriculacion" placeholder="dd/mm/aaaa" required>
+                </div>
+                <div class="div--flexColumn" style="width: 50%;">
+                    <label>6 últimos dígitos (nº bastidor):</label>
+                    <input type="text" id="numBastidor" pattern="[0-9a-zA-Z]{6}">
+                </div>
+            </div>
+            <br>
+
+            <legend>Datos del titular:</legend>
+            <div class="form-control">
+                <div class="div--flexRow">
+                    <div class="div--flexColumn" style="width: 25%;">
+                        <label>Nombre:</label>
+                        <input type="text" id="nombre">
+                    </div>
+                    <div class="div--flexColumn" style="width: 25%;">
+                        <label>Apellidos:</label>
+                        <input type="text" id="apellidos">
+                    </div>
+                    <div class="div--flexColumn" style="width: 50%;">
+                        <label>Domicilio:</label>
+                        <input type="text" id="domicilio">
+                    </div>
+                </div>
+                <div class="div--flexRow">
+                    <div class="div--flexColumn" style="width: 25%;">
+                        <label>DNI:</label>
+                        <input type="text" id="dni">
+                    </div>
+                    <div class="div--flexColumn" style="width: 25%;">
+                        <label>Correo electrónico:</label>
+                        <input type="text" id="email">
+                    </div>
+                    <div class="div--flexColumn" style="width: 25%;">
+                        <label>Tlf:</label>
+                        <input type="text" id="telefono">
+                    </div>
+                    <div>
+                        <label>Tipo de baja:</label>
+                        <div class="form-check" style="width: 25%;">
+                            <input class="form-check-input" type="checkbox" id="tipoBaja" value="temporal">
+                            <label class="form-check-label">Temporal</label>
+                            <input class="form-check-input" type="checkbox" id="tipoBaja" value="definitiva">
+                            <label class="form-check-label">Definitiva</label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+
+        </form>
+
+
+    </div>
+
+    <!-- Pie del documento -->
+    <footer class="footer mt-auto py-3 fixed-bottom bg-light">
+        <div class="container">
+            <span class="text-muted">© 2023 Ricardo Moreno Cantea - DWEC - 2º DAW - Curso 23/24</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Javascript y popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
