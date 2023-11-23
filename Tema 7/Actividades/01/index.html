@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta id="viewport" content="width=device-width, initial-scale=1" />
-    <title>Plantilla Bootstrap 5.3.2</title>
+    <title>DWEC Actividad 7.1</title>
 
     <!-- Bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -33,40 +33,13 @@
             padding: 0.25em 0.5em;
         }
     </style>
-    <script>
-        class BajaVehiculo {
-            constructor() {
-                this.#funcionEvento();
-            }
-            #valida() {
-                var
-                    matricula = document.getElementById("matricula"),
-                    fechaMatriculacion = document.getElementById("fechaMatriculacion"),
-                    numBastidor = document.getElementById("numBastidor"),
-                    nombre = document.getElementById("nombre"),
-                    apellidos = document.getElementById("apellidos"),
-                    domicilio = document.getElementById("domicilio"),
-                    dni = document.getElementById("dni"),
-                    email = document.getElementById("email"),
-                    telefono = document.getElementById("telefono"),
-                    tipoBaja = document.getElementById("tipoBaja");
 
-                if (matricula.validity.pattern) { }
-
-            }
-
-            #funcionEvento() {
-
-            }
-
-        }
-    </script>
 </head>
 
 <body>
     <!-- Capa Principal -->
     <div class="container">
-        <header class="pb-3 mb-4 border-bottom">
+        <header class="pb-3 mb-4 border-bottom" style="padding-top: 10px;">
             <i class="bi bi-app-indicator"></i>
             <span class="fs-3">Solicitud de baja de vehículos</span>
         </header>
@@ -78,7 +51,7 @@
             <div class="form-control div--flexRow">
                 <div class="div--flexColumn" style="width: 25%;">
                     <label>Matrícula:</label>
-                    <input type="text" id="matricula" pattern="[0-9]{4}[A-Z]{3}" required>
+                    <input type="text" id="matricula" pattern="^[0-9]{4}[A-Z]{3}$" required>
                 </div>
                 <div class="div--flexColumn" style="width: 25%;">
                     <label>Fecha matriculación:</label>
@@ -86,7 +59,7 @@
                 </div>
                 <div class="div--flexColumn" style="width: 50%;">
                     <label>6 últimos dígitos (nº bastidor):</label>
-                    <input type="text" id="numBastidor" pattern="[0-9a-zA-Z]{6}">
+                    <input type="text" id="numBastidor" pattern="^[0-9a-zA-Z]{6}$" required>
                 </div>
             </div>
             <br>
@@ -96,38 +69,43 @@
                 <div class="div--flexRow">
                     <div class="div--flexColumn" style="width: 25%;">
                         <label>Nombre:</label>
-                        <input type="text" id="nombre">
+                        <input type="text" id="nombre" required>
                     </div>
                     <div class="div--flexColumn" style="width: 25%;">
                         <label>Apellidos:</label>
-                        <input type="text" id="apellidos">
+                        <input type="text" id="apellidos" required>
                     </div>
                     <div class="div--flexColumn" style="width: 50%;">
                         <label>Domicilio:</label>
-                        <input type="text" id="domicilio">
+                        <input type="text" id="domicilio" required>
                     </div>
                 </div>
                 <div class="div--flexRow">
                     <div class="div--flexColumn" style="width: 25%;">
-                        <label>DNI:</label>
-                        <input type="text" id="dni">
+                        <label id="etiquetaDNI">DNI:</label>
+                        <input type="text" id="dni" pattern="^[0-9]{8}[a-zA-Z]$" required>
                     </div>
                     <div class="div--flexColumn" style="width: 25%;">
                         <label>Correo electrónico:</label>
-                        <input type="text" id="email">
+                        <input type="text" id="email" pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$" required>
                     </div>
                     <div class="div--flexColumn" style="width: 25%;">
                         <label>Tlf:</label>
-                        <input type="text" id="telefono">
+                        <input type="text" id="telefono" pattern="^[0-9]{9}" required>
                     </div>
                     <div>
                         <label>Tipo de baja:</label>
-                        <div class="form-check" style="width: 25%;">
-                            <input class="form-check-input" type="checkbox" id="tipoBaja" value="temporal">
-                            <label class="form-check-label">Temporal</label>
-                            <input class="form-check-input" type="checkbox" id="tipoBaja" value="definitiva">
-                            <label class="form-check-label">Definitiva</label>
-
+                        <div style="width: 25%;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="radio1" id="tipoBaja"
+                                    value="temporal">
+                                <label class="form-check-label">Temporal</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="radio1" id="tipoBaja"
+                                    value="definitiva" checked>
+                                <label class="form-check-label">Definitiva</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -135,9 +113,11 @@
 
             <br>
 
+            <button class="btn btn-danger" type="reset">Borrar Datos</button>
+            <button class="btn btn-primary" type="submit">Enviar</button>
+
 
         </form>
-
 
     </div>
 
@@ -150,8 +130,79 @@
 
     <!-- Bootstrap Javascript y popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+
+    <script>
+        class BajaVehiculo {
+
+            constructor() {
+                this.#validar();
+                this.#etiquetaDNI();
+            }
+
+            #validar() {
+                var
+                    matricula = document.getElementById("matricula"),
+                    numBastidor = document.getElementById("numBastidor"),
+                    dni = document.getElementById("dni"),
+                    email = document.getElementById("email")
+                    ;
+                matricula.addEventListener("input", () => {
+                    if (matricula.validity.patternMismatch) {
+                        matricula.setCustomValidity("Ingrese una matricula válida (4 números y 3 letras)");
+                    }
+                    else {
+                        matricula.setCustomValidity("");
+                    }
+                });
+
+                numBastidor.addEventListener("input", () => {
+                    if (numBastidor.validity.patternMismatch) {
+                        numBastidor.setCustomValidity("Ingrese un valor valido (6 letras y/o números)");
+                    }
+                    else {
+                        numBastidor.setCustomValidity("");
+                    }
+                });
+
+                dni.addEventListener("input", () => {
+                    if (dni.validity.patternMismatch) {
+                        dni.setCustomValidity("Ingrese un DNI válido (8 números y una letra)");
+                    }
+                    else {
+                        dni.setCustomValidity("");
+                    }
+                });
+
+                email.addEventListener("input", () => {
+                    if (email.validity.patternMismatch) {
+                        email.setCustomValidity("Ingrese un correo electrónico válido (correo@nombre.dominio)");
+                    }
+                    else {
+                        email.setCustomValidity("");
+                    }
+                });
+            }
+
+            #etiquetaDNI() {
+                var etiquetaDNI = document.getElementById("etiquetaDNI");
+                var dni = document.getElementById("dni");
+                dni.addEventListener("focus", () => {
+                    etiquetaDNI.textContent = "Editando DNI...";
+                });
+
+                dni.addEventListener("blur", () => {
+                    etiquetaDNI.textContent = "DNI";
+                })
+            }
+
+        }
+
+        var bajaVehiculo = new BajaVehiculo();
+
+    </script>
+
 </body>
 
 </html>
