@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DWEC Tema 3 Ejercicio</title>
+	</head>
+	<body>
+		<h3>Ejercicio 4: Ordenar de menor a mayor</h3>
+		<form onsubmit="mostrar();">
+			<label for="num1">Número 1</label><br />
+			<input type="number" name="num1" id="num1" required /><br />
+			<br />
+			<label for="num2">Número 2</label><br />
+			<input type="number" name="num2" id="num2" required /><br />
+			<br />
+			<label for="num3">Número 3</label><br />
+			<input type="number" name="num3" id="num3" required /><br />
+			<br />
+			<button type="reset">Borrar</button>
+			<button type="submit">Enviar</button>
+		</form>
+        <script>
+            function mostrar() {
+                var numeros = [
+                    document.getElementById("num1").value,
+					document.getElementById("num2").value,
+					document.getElementById("num3").value
+                ];
+
+                numeros.sort((a, b) => a - b);
+
+                alert(numeros);
+            }
+        </script>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DWEC Tema 3 Ejercicio</title>
+	</head>
+	<body>
+		<h3>Ejercicio 3: Cálculo de primas</h3>
+		<form onsubmit="calcularPrima();">
+			<label>Sueldo del trabajador</label><br />
+			<input type="number" step="0.01" id="sueldo" required /> €<br />
+			<br />
+			<label>Antigüedad del trabajador</label><br />
+			<input type="number" step="1" id="antiguedad" required /> años<br />
+			<br />
+			<button type="reset">Borrar</button>
+			<button type="submit">Enviar</button>
+		</form>
+		<script>
+			function calcularPrima() {
+				var sueldo = Number(document.getElementById("sueldo").value);
+				var antiguedad = Number(document.getElementById("antiguedad").value);
+				var valorFinal = sueldo;
+
+				if (antiguedad >= 10) {
+					if (sueldo > 750) {
+						valorFinal = sueldo * 1.1;
+					} else {
+						valorFinal = sueldo * 1.05;
+					}
+				}
+
+				alert(`
+                Sueldo: ${sueldo.toFixed(2)} €
+                Antigüedad: ${antiguedad} años
+                Valor final: ${valorFinal.toFixed(2)} €
+                `);
+			}
+		</script>
+	</body>
+</html>

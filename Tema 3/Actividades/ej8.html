@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DWEC Tema 3 Ejercicio 8</title>
+</head>
+<body>
+    <h3>Ejercicio 8: Descomposición en factores primos</h3>
+    <form onsubmit="mostrar();">
+        <label>Número</label><br>
+        <input type="number" min="2" id="num" required><br><br>
+        <button type="reset">Borrar</button>
+        <button type="submit">Calcular</button>
+    </form>
+    <script>
+        /* Averiguar si un número es primo */
+        function esPrimo(num) {
+            if (num == 0 || num == 1 || num == 4) {
+                return false;
+            }
+            for (var i = 2; i < num / 2; i++) {
+                if (num % i == 0) return false;
+            }
+            return true;
+        }
+        /* almacenar en un array los factores primos de un número */
+        function descomponer(num) {
+            var primos = [];
+            for (var i = 0; i <= num; i++) {
+                if (esPrimo(i)) {
+                    primos.push(i);
+                }
+            }
+            var factores = [];
+            var cont = 0;
+            while (true) {
+                if (num == 1) {
+                    break;
+                }
+                if (num % primos[cont] == 0) {
+                    factores.push(primos[cont]);
+                    num = num / primos[cont];
+                }
+                else {
+                    cont++;
+                }
+            }
+            return factores;
+        }
+        /* Dar formato y mostrar */
+        function mostrar() {
+            var num = parseInt(document.getElementById("num").value);
+            factores = descomponer(num);
+            var mensaje = factores[0];
+            for (var i = 1; i < factores.length; i++) {
+                mensaje += " * " + factores[i];
+            }
+            alert(`${num} = ${mensaje}`);
+        }
+    </script>
+    
+</body>
+</html>

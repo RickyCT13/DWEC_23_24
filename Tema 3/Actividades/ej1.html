@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DWEC Tema 3 Ejercicio 1</title>
+	</head>
+	<body>
+		<h3>Ejercicio 1: Averiguar el número mayor</h3>
+		<form onsubmit="numeroMayor();">
+			<label>Número 1</label><br>
+			<input type="number" id="val1" required/><br><br>
+			<label>Número 2</label><br>
+			<input type="number" id="val2" required/><br><br>
+
+			<button type="reset">Borrar</button>
+			<button type="submit">Enviar</button>
+		</form>
+
+		<script>
+			function numeroMayor() {
+				var val1 = document.getElementById("val1").value;
+				var val2 = document.getElementById("val2").value;
+				if (val1 > val2) {
+					alert(
+						`El primer número (${val1}) es mayor que el segundo (${val2}).`
+					);
+				} else if (val1 < val2) {
+					alert(
+						`El segundo número (${val2}) es mayor que el primero (${val1}).`
+					);
+				} else {
+					alert(`Los dos números (${val1}) son iguales`);
+				}
+			}
+		</script>
+	</body>
+</html>

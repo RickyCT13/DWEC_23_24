@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DWEC Tema 3 Ejercicio 3</title>
+	</head>
+	<body>
+        <h3>Ejercicio 3: Validar números</h3>
+		<form onsubmit="validarNumeros();">
+			<label for="num1">Número 1</label><br />
+			<input type="number" name="num1" id="num1" required /><br />
+			<br />
+			<label for="num2">Número 2</label><br />
+			<input type="number" name="num2" id="num2" required /><br />
+			<br />
+			<label for="num3">Número 3</label><br />
+			<input type="number" name="num3" id="num3" required /><br />
+			<br />
+			<button type="reset">Borrar</button>
+			<button type="submit">Enviar</button>
+		</form>
+		<script>
+			function validarNumeros() {
+				var numeros = [
+                    document.getElementById("num1").value,
+					document.getElementById("num2").value,
+					document.getElementById("num3").value
+                ];
+
+                for (const num of numeros) {
+                    if (num > 100 || num < 10) {
+                        alert("No cumple");
+                        return;
+                    }
+                }
+
+                alert("Ok");
+			}
+		</script>
+	</body>
+</html>
