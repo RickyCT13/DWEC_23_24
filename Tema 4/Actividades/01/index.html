@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DWEC Tema 4 Ejercicio 1</title>
+</head>
+<body onload="menu();">
+    <script>
+        function menu() {
+            let forma;
+
+            let valores = [];
+            
+            let volumen;
+            let area;
+
+            let salir = false;
+            while(salir == false) {
+                let entrada = prompt(`
+                Elija una opción:
+                1. Elegir entre cubo, esfera o cilindro.
+                2. Introducir los valores de las variables.
+                3. Calcular volumen.
+                4. Calcular área.
+                5. Finalizar.
+                `);
+                switch(parseInt(entrada)) {
+                    case 1:
+                        forma = elegir();
+                        break;
+                    case 2:
+                        valores = introValores(forma);
+                        break;
+                    case 3:
+                        volumen = calcularVolumen(forma, valores);
+                        alert(`El volumen de la forma (${forma}) es: ${volumen} cm³`);
+                        break;
+                    case 4:
+                        area = calcularArea(forma, valores);
+                        alert(`El área de superficie de la forma (${forma}) es: ${area} cm²`);
+                        break;
+                    case 5:
+                        salir = true;
+                        break;
+                    default:
+                        alert("Error. Elija una de las opciones dadas.");
+                        break;
+                }
+            }
+        }
+
+        function elegir() {
+            let entrada = prompt(`Elegir entre:
+            1. Cubo
+            2. Esfera
+            3. Cilindro`);
+            switch(parseInt(entrada)) {
+                case 1:
+                    return "Cubo";
+                case 2:
+                    return "Esfera";
+                case 3:
+                    return "Cilindro";
+                default:
+                    alert("Error. Debe elegir una de las 3 opciones");
+            }
+        }
+
+        function introValores(forma) {
+            if (forma === null) {
+                alert("No ha elegido ninguna forma.");
+                return;
+            }
+            switch (forma) {
+                case "Cubo":
+                    let lado = parseFloat(prompt("Introduzca el lado del cubo (cm) :"));
+                    return lado;
+                case "Esfera":
+                    let radio = parseFloat(prompt("Introduzca el radio de la esfera (cm) :"));
+                    return radio;
+                case "Cilindro":
+                    let radioC = parseFloat(prompt("Introduzca el radio del cilindro (cm) :"));
+                    let altura = parseFloat(prompt("Introduzca la altura del cilindro (cm) :"));
+                    return [radioC, altura];
+                default:
+                    alert("No ha elegido ninguna forma.");
+                    return; 
+            }
+        }
+
+        function calcularVolumen(forma, valores) {
+            switch(forma) {
+                case "Cubo":
+                    return (Math.pow(valores, 3)).toFixed(2);
+                case "Esfera":
+                    return ((4/3) * Math.PI * Math.pow(valores, 3)).toFixed(2);
+                case "Cilindro":
+                    return (Math.PI * Math.pow(valores[0], 2) * valores[1]).toFixed(2);
+                default:
+                    alert("No ha elegido ninguna forma.");
+                    return; 
+            }
+        }
+
+        function calcularArea(forma, valores) {
+            switch(forma) {
+                case "Cubo":
+                    return (6 * Math.pow(valores, 2)).toFixed(2);
+                case "Esfera":
+                    return (4 * Math.PI * Math.pow(valores, 2)).toFixed(2);
+                case "Cilindro":
+                    return ((2 * Math.PI * Math.pow(valores[0], 2)) + (2 * Math.PI * valores[0] * valores[1])).toFixed(2);
+                default:
+                    alert("No ha elegido ninguna forma.");
+                    return; 
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DWEC Tarea 1A Tema 6</title>
+		<script>
+			function entradaDatos() {
+				let matriz = [];
+				let fila = [];
+				let entrada = 0;
+				let salir = false;
+				while (true) {
+					while (true) {
+						entrada = prompt(
+							"Introduzca números enteros." +
+								'\n· Introduzca "S/s" para una nueva fila.' +
+								'\n· Introduzca "F/f" cuando haya terminado.' +
+								'\n· Pulse "Cancelar" para salir del programa.'
+						);
+						if (entrada === "" || entrada === null) {
+							return;
+						}
+						if (entrada === "S" || entrada === "s") {
+							break;
+						}
+						if (entrada === "F" || entrada === "f") {
+							salir = true;
+							break;
+						}
+						fila.push(parseInt(entrada));
+					}
+                    /* Añade la fila (array unidimensional) y la limpia */
+					matriz.push(fila);
+					fila = [];
+                    /* Cuando se introduzca 'f', además de pasar la última fila, procede con el filtrado */
+					if (salir === true) {
+						let numSeparados = separarParesImpares(matriz);
+						let pares = numSeparados[0].sort((a, b) => a - b);
+						let impares = numSeparados[1].sort((a, b) => a - b);
+						let strPares = "Números pares: [";
+						let strImpares = "Números impares: [";
+
+						/* Formar string de numeros pares */
+						for (let i = 0; i < pares.length - 2; i++) {
+							strPares += pares[i] + ", ";
+						}
+						strPares += pares[pares.length - 1] + "]";
+
+						/* Formar string de numeros pares */
+						for (let i = 0; i < impares.length - 2; i++) {
+							strImpares += impares[i] + ", ";
+						}
+						strImpares += impares[impares.length - 1] + "]";
+						alert(strPares + "\n" + strImpares);
+					}
+				}
+			}
+
+			function separarParesImpares(matriz) {
+				/* Declara dos arrays para los numeros pares e impares */
+				let pares = [];
+				let impares = [];
+				/* Recorre con un doble for/of la matriz y añade cada número al
+				 * array de pares o el de impares
+				 */
+				for (fila of matriz) {
+					for (numero of fila) {
+						if (numero % 2 === 0) {
+							pares.push(numero);
+						} else {
+							impares.push(numero);
+						}
+					}
+				}
+				/* Devuelve ambos arrays en forma de matriz */
+				return [pares, impares];
+			}
+		</script>
+	</head>
+	<body onload="entradaDatos()"></body>
+</html>
