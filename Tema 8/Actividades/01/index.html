@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>DWEC Tarea 1 Tema 8</title>
+
+		<!-- Bootstrap css -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+			crossorigin="anonymous"
+		/>
+
+		<!-- Bootstrap Icons 1.11.1 -->
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+		/>
+	</head>
+	<body>
+		<!-- Capa Principal -->
+		<div class="container">
+			<header class="pb-3 mb-4 border-bottom">
+				<i class="bi bi-app-indicator"></i>
+				<span class="fs-3">Tienda</span>
+			</header>
+
+			<div class="mb-3" id="Articulos"></div>
+
+			<table class="table" id="tablaArticulos">
+				<caption>
+					Articulos comprados
+				</caption>
+				<thead>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Unidades</th>
+					<th>Precio/ud.</th>
+					<th>Subtotal</th>
+				</thead>
+				<tbody>
+					<td>1</td>
+					<td>Art1</td>
+					<td>12</td>
+					<td>12</td>
+					<td>144</td>
+					<td class="border-0">
+						<button class="btn btn-danger">
+							<i class="bi-trash-fill"></i>
+						</button>
+					</td>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Pie del documento -->
+		<footer class="footer mt-auto py-3 fixed-bottom bg-light">
+			<div class="container">
+				<span class="text-muted"
+					>© 2022 Juan Carlos Moreno - DWES - 2º DAW - Curso
+					23/24</span
+				>
+			</div>
+		</footer>
+
+		<!-- Bootstrap Javascript y popper -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+			crossorigin="anonymous"
+		></script>
+
+		<script>
+			/* Tarea 1 Tema 8 */
+
+			/* Clase Articulo */
+			class Articulo {
+				#id;
+				#nombre;
+				#precio;
+                #unidades;
+                #subtotal;
+
+				/* Número global para habilitar autoincremento de cod. */
+				static #idAutoIncrement = 0;
+
+				constructor(id, nombre, precio, unidades) {
+					if (id === null) {
+						this.#id = ++Articulo.#idAutoIncrement;
+					}
+                    else {
+                        this.#id = parseInt(id);
+                    }
+					this.#nombre = nombre;
+					this.#precio = Number(precio).toFixed(2);
+                    this.#unidades = parseInt(unidades);
+                    this.#subtotal = precio * unidades;
+				}
+
+				getId() {
+					return this.#id;
+				}
+
+				setId(id) {
+					this.#id = id;
+				}
+
+				getNombre() {
+					return this.#nombre;
+				}
+
+				setNombre(nombre) {
+					this.#nombre = nombre;
+				}
+
+				getPrecio() {
+					return this.#precio;
+				}
+
+				setPrecio(precio) {
+					this.#precio = precio;
+				}
+
+                getUnidades() {
+					return this.#unidades;
+				}
+
+				setUnidades(unidades) {
+					this.#unidades = unidades;
+				}
+
+				getSubtotal() {
+					return this.#subtotal;
+				}
+
+				setSubtotal() {
+					this.#subtotal = this.#precio * this.#unidades;
+				}
+			}
+
+			class Cesta {
+                #articulos = [];
+
+                constructor(...articulos) {
+                    this.#articulos = articulos;
+                }
+
+                getArticulos() {
+                    return this.#articulos;
+                }
+                setArticulos(articulos) {
+                    this.#articulos = articulos;
+                }
+
+                add(articulo) {
+                    this.#articulos.push(articulo);
+                }
+
+                get(id) {
+                    return this.#articulos.find((articulo) => articulo.getId() === id);
+                }
+
+                update(id, nombre, precio, unidades) {
+                    let articuloEdit = this.get(id);
+
+                    if (nombre !== null) {
+                        articuloEdit.setNombre(nombre);
+                    }
+                    if (precio !== null) {
+                        articuloEdit.setPrecio(precio);
+                    }
+                    if (unidades !== null) {
+                        articuloEdit.setUnidades(unidades);
+                    }
+
+                    articuloEdit.setSubtotal();
+                    
+                }
+            }
+		</script>
+	</body>
+</html>
