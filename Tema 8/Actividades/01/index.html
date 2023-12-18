@@ -18,6 +18,7 @@
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
 		/>
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
 		<!-- Capa Principal -->
@@ -27,30 +28,62 @@
 				<span class="fs-3">Tienda</span>
 			</header>
 
-			<div class="mb-3" id="Articulos"></div>
+			<div class="mb-3" id="articulos">
+				<!-- Generar dinámicamente los artículos -->
+				<div class="border rounded">
+					<img src="" alt="Articulo" />
+					<h3>Articulo</h3>
+					<p>20€</p>
+					<input
+						class="form-control"
+						type="number"
+						name="cantidad"
+						step="0"
+						value="0"
+					/>
+					<button class="btn btn-primary" onclick="">Añadir</button>
+				</div>
+				<div class="border rounded">
+					<img src="" alt="Articulo" />
+					<h3>Articulo</h3>
+					<p>20€</p>
+					<input
+						class="form-control"
+						type="number"
+						name="cantidad"
+						step="0"
+						value="0"
+					/>
+					<button class="btn btn-primary" onclick="">Añadir</button>
+				</div>
+			</div>
 
 			<table class="table" id="tablaArticulos">
 				<caption>
 					Articulos comprados
 				</caption>
 				<thead>
-					<th>Id</th>
-					<th>Nombre</th>
-					<th>Unidades</th>
-					<th>Precio/ud.</th>
-					<th>Subtotal</th>
+					<tr>
+						<th>Id</th>
+						<th>Nombre</th>
+						<th>Unidades</th>
+						<th>Precio/ud.</th>
+						<th>Subtotal</th>
+					</tr>
 				</thead>
 				<tbody>
-					<td>1</td>
-					<td>Art1</td>
-					<td>12</td>
-					<td>12</td>
-					<td>144</td>
-					<td class="border-0">
-						<button class="btn btn-danger">
-							<i class="bi-trash-fill"></i>
-						</button>
-					</td>
+					<tr>
+						<td>1</td>
+						<td>Art1</td>
+						<td>12</td>
+						<td>12</td>
+						<td>144</td>
+						<td class="border-0">
+							<button class="btn btn-danger">
+								<i class="bi-trash-fill"></i>
+							</button>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -80,8 +113,8 @@
 				#id;
 				#nombre;
 				#precio;
-                #unidades;
-                #subtotal;
+				#unidades;
+				#subtotal;
 
 				/* Número global para habilitar autoincremento de cod. */
 				static #idAutoIncrement = 0;
@@ -89,14 +122,13 @@
 				constructor(id, nombre, precio, unidades) {
 					if (id === null) {
 						this.#id = ++Articulo.#idAutoIncrement;
+					} else {
+						this.#id = parseInt(id);
 					}
-                    else {
-                        this.#id = parseInt(id);
-                    }
 					this.#nombre = nombre;
 					this.#precio = Number(precio).toFixed(2);
-                    this.#unidades = parseInt(unidades);
-                    this.#subtotal = precio * unidades;
+					this.#unidades = parseInt(unidades);
+					this.#subtotal = precio * unidades;
 				}
 
 				getId() {
@@ -123,7 +155,7 @@
 					this.#precio = precio;
 				}
 
-                getUnidades() {
+				getUnidades() {
 					return this.#unidades;
 				}
 
@@ -141,44 +173,60 @@
 			}
 
 			class Cesta {
-                #articulos = [];
+				#articulos = [];
 
-                constructor(...articulos) {
-                    this.#articulos = articulos;
-                }
+				constructor(...articulos) {
+					this.#articulos = articulos;
+				}
 
-                getArticulos() {
-                    return this.#articulos;
-                }
-                setArticulos(articulos) {
-                    this.#articulos = articulos;
-                }
+				getArticulos() {
+					return this.#articulos;
+				}
+				setArticulos(articulos) {
+					this.#articulos = articulos;
+				}
 
-                add(articulo) {
-                    this.#articulos.push(articulo);
-                }
+				add(articulo) {
+					this.#articulos.push(articulo);
+				}
 
-                get(id) {
-                    return this.#articulos.find((articulo) => articulo.getId() === id);
-                }
+				get(id) {
+					return this.#articulos.find(
+						(articulo) => articulo.getId() === id
+					);
+				}
 
-                update(id, nombre, precio, unidades) {
-                    let articuloEdit = this.get(id);
+				update(id, nombre, precio, unidades) {
+					let articuloEdit = this.get(id);
 
-                    if (nombre !== null) {
-                        articuloEdit.setNombre(nombre);
-                    }
-                    if (precio !== null) {
-                        articuloEdit.setPrecio(precio);
-                    }
-                    if (unidades !== null) {
-                        articuloEdit.setUnidades(unidades);
-                    }
+					if (nombre !== null) {
+						articuloEdit.setNombre(nombre);
+					}
+					if (precio !== null) {
+						articuloEdit.setPrecio(precio);
+					}
+					if (unidades !== null) {
+						articuloEdit.setUnidades(unidades);
+					}
 
-                    articuloEdit.setSubtotal();
-                    
-                }
-            }
+					articuloEdit.setSubtotal();
+				}
+
+				delete(id) {
+					this.#articulos.splice(id, 1);
+				}
+			}
+			class Tienda {
+				#cesta = new Cesta();
+
+				constructor(cesta) {
+					this.#cesta = cesta;
+				}
+
+				addArticulo(articulo) {
+					let divArticulos = document.getElementById("articulos");
+				}
+			}
 		</script>
 	</body>
 </html>
