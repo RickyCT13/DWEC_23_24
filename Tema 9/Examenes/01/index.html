@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .centra {
+            border: 1px solid grey;
+            text-align: center;
+        }
+
+        .borde {
+            border: 1px solid grey;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script>
+
+        class Secc {
+            // id, nombre, coste y total
+            //cabecera, modelo (id, nombre), coste, total
+            // Devuelve creación de codigo html de toda una fila
+
+            id;
+            nombre;
+            costes;
+            total;
+
+            constructor(id, nombre, costes) {
+                this.id = id;
+                this.nombre = nombre;
+                this.costes = costes;
+                this.total = 0;
+            }
+
+            crearCabecera() {
+                let filaCabecera = document.createElement("tr");
+
+                let celdaId = document.createElement("td");
+                celdaId.innerHTML = "ID";
+                celdaId.setAttribute("class", "centra");
+
+                let celdaNombre = document.createElement("td");
+                celdaNombre.innerHTML = "Nombre";
+                celdaNombre.setAttribute("class", "centra");
+
+                let celdaCoste = document.createElement("td");
+                celdaCoste.innerHTML = "Coste €";
+                celdaCoste.setAttribute("class", "centra");
+
+                filaCabecera.appendChild(celdaId);
+                filaCabecera.appendChild(celdaNombre);
+                filaCabecera.appendChild(celdaCoste);
+
+                return filaCabecera;
+            }
+
+            crearModelo() {
+                let filaModelo = document.createElement("tr");
+
+                let modeloId = document.createElement("td");
+                modeloId.innerHTML = this.id;
+
+                let modeloNombre = document.createElement("th");
+                modeloNombre.innerHTML = this.nombre;
+                let celdaVacia = document.createElement("td");
+
+                filaModelo.appendChild(modeloId);
+                filaModelo.appendChild(modeloNombre);
+                filaModelo.appendChild(celdaVacia);
+
+                return filaModelo;
+            }
+
+            crearCostes() {
+                let costesCreados = [];
+
+                for (const tipo in this.costes) {
+                    if (Object.hasOwnProperty.call(this.costes, tipo)) {
+                        const coste = this.costes[tipo];
+                        let filaCoste = document.createElement("tr");
+
+                        let celdaVacia = document.createElement("td");
+
+                        let costeTipo = document.createElement("td");
+                        costeTipo.innerHTML = tipo;
+
+                        let costeValor = document.createElement("td");
+                        costeValor.innerHTML = coste;
+
+                        filaCoste.appendChild(celdaVacia);
+                        filaCoste.appendChild(costeTipo);
+                        filaCoste.appendChild(costeValor);
+
+                        costesCreados.push(filaCoste);
+                    }
+                }
+
+                return costesCreados;
+            }
+
+            crearTotal() {
+                let filaTotal = document.createElement("tr");
+
+                let celdaVacia = document.createElement("td");
+
+                let celdaTotalTexto = document.createElement("th");
+                celdaTotalTexto.innerHTML = "Total";
+
+                let celdaTotalValor = document.createElement("th");
+                for (const tipo in this.costes) {
+                    if (Object.hasOwnProperty.call(this.costes, tipo)) {
+                        const coste = this.costes[tipo];
+                        this.total += coste;
+                    }
+                }
+                celdaTotalValor.innerHTML = this.total;
+
+                filaTotal.appendChild(celdaVacia);
+                filaTotal.appendChild(celdaTotalTexto);
+                filaTotal.appendChild(celdaTotalValor);
+
+                return filaTotal;
+            }
+        }
+
+        class Tabla {
+            carteras;
+
+            constructor(json) {
+                this.carteras = JSON.parse(json);
+            }
+
+            renderizar() {
+                let cuerpoHTML = document.body;
+
+                let tabla = document.createElement("table");
+
+                tabla.setAttribute("border", "1");
+
+                for (const clave in this.carteras) {
+                    if (Object.hasOwnProperty.call(this.carteras, clave)) {
+                        const cartera = this.carteras[clave];
+                        let seccCartera = new Secc(cartera.id, cartera.nombre, cartera.costes);
+                        tabla.appendChild(seccCartera.crearCabecera());
+                        tabla.appendChild(seccCartera.crearModelo());
+                        seccCartera.crearCostes().forEach((coste) => {
+                            tabla.appendChild(coste);
+                        });
+                        tabla.appendChild(seccCartera.crearTotal());
+                    }
+                }
+
+                /*this.carteras.forEach((cartera) => {
+                    let seccCartera = new Secc(cartera.id, cartera.nombre, cartera.costes);
+                    tabla.appendChild(seccCartera.crearCabecera());
+                    tabla.appendChild(seccCartera.crearModelo());
+                    seccCartera.crearCostes().forEach((coste) => {
+                        tabla.appendChild(coste);
+                    });
+                    tabla.appendChild(seccCartera.crearTotal());
+                });*/
+
+                cuerpoHTML.appendChild(tabla);
+            }
+        }
+
+        // Cadena 'bdDallo', contiene todos los costes en euros (materiales, mano de obra, etc...)
+        //  para realizar el escandallo de una serie de carteras de piel recibido desde una BBDD.
+
+        var bdDallo = `[{ "id": 1,
+                        "nombre": "cartera piel vacuno negra",
+                        "costes":{ "piel": 5,
+                                   "hilo": 0.80,
+                                   "rebaje": 1,
+                                   "pegamento": 0.50,
+                                   "pintura": 0.45,
+                                   "broches": 0.90,
+                                   "cosido": 1,
+                                   "fabricación": 15,
+                                   "embasado": 1}                
+                   },
+                   {    "id": 2,
+                        "nombre": "cartera piel vacuno azul",
+                        "costes":{ "piel": 6,
+                                   "hilo": 0.90,
+                                   "rebaje": 1.50,
+                                   "pegamento": 0.70,
+                                   "pintura": 0.50,
+                                   "broches": 0.80,
+                                   "cosido": 1.50,
+                                   "fabricación": 16,
+                                   "embasado": 1.20}                
+                   },
+                   {    "id": 3,
+                        "nombre": "cartera piel coco",
+                        "costes":{ "piel": 25,
+                                   "hilo": 1,
+                                   "rebaje": 1,
+                                   "pegamento": 0.70,
+                                   "pintura": 0.80,
+                                   "broches": 1,
+                                   "cosido": 3,
+                                   "fabricación": 20,
+                                   "embasado": 5}               
+                   }]`;
+        let tabla = new Tabla(bdDallo);
+        tabla.renderizar();
+
+    </script>
+</body>
+
+</html>

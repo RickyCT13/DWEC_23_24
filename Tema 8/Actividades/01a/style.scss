@@ -1,0 +1,11 @@
+#articulos {
+	display: flex;
+	div {
+		padding: 1em;
+		display: flex;
+		flex-direction: column;
+        input, button {
+            margin-bottom: 1em;
+        }
+	}
+}

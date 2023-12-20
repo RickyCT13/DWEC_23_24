@@ -112,6 +112,7 @@
 			class Articulo {
 				#id;
 				#nombre;
+				#imagen;
 				#precio;
 				#unidades;
 				#subtotal;
@@ -119,13 +120,14 @@
 				/* Número global para habilitar autoincremento de cod. */
 				static #idAutoIncrement = 0;
 
-				constructor(id, nombre, precio, unidades) {
+				constructor(id, nombre, imagen, precio, unidades) {
 					if (id === null) {
 						this.#id = ++Articulo.#idAutoIncrement;
 					} else {
 						this.#id = parseInt(id);
 					}
 					this.#nombre = nombre;
+					this.#imagen = imagen;
 					this.#precio = Number(precio).toFixed(2);
 					this.#unidades = parseInt(unidades);
 					this.#subtotal = precio * unidades;
@@ -145,6 +147,14 @@
 
 				setNombre(nombre) {
 					this.#nombre = nombre;
+				}
+
+				getImagen() {
+					return this.#imagen;
+				}
+
+				setImagen(imagen) {
+					this.#imagen = imagen;
 				}
 
 				getPrecio() {
@@ -217,14 +227,62 @@
 				}
 			}
 			class Tienda {
+				#articulos = [];
 				#cesta = new Cesta();
+				
 
-				constructor(cesta) {
+				constructor(articulos, cesta) {
+					this.#articulos = articulos;
 					this.#cesta = cesta;
 				}
 
-				addArticulo(articulo) {
+				mostrarArticulos() {
 					let divArticulos = document.getElementById("articulos");
+					this.#articulos.forEach((articulo) => {
+						let divArtIndiv = document.createElement("div");
+						divArtIndiv.setAttribute("class", "border rounded");
+						divArtIndiv.setAttribute("idArticulo", articulo.getId());
+						divArticulos.appendChild(divArtIndiv);
+
+						let imagen = document.createElement("img");
+						imagen.setAttribute("src", articulo.getImagen());
+						img.setAttribute("alt", articulo.getNombre());
+						divArtIndiv.appendChild(imagen);
+
+						let nombre = document.createElement("h3");
+						nombre.innerHTML = articulo.getNombre();
+						divArtIndiv.appendChild(nombre);
+
+						let precio = document.createElement("p");
+						precio.innerHTML = articulo.getPrecio() + " €";
+						divArtIndiv.appendChild(precio);
+
+						let inputUnidades = document.createElement("input");
+						inputUnidades.setAttribute("class", "form-control");
+						inputUnidades.setAttribute("type", "number");
+						inputUnidades.setAttribute("name", "cantidad");
+						inputUnidades.setAttribute("step", "0");
+						inputUnidades.setAttribute("min", "1");
+						inputUnidades.setAttribute("value", "1");
+						divArtIndiv.appendChild(inputUnidades);
+
+						let boton = document.createElement("button");
+						boton.setAttribute("class", "btn btn-primary");
+						boton.innerHTML = "Añadir";
+						divArtIndiv.appendChild(boton);
+
+						boton.addEventListener(
+							"click",
+							((e) => {
+								let cantidad = document.querySelector(`idArticulo="${articulo.getId()}"`).getElementsByTagName("input")[0].value;
+								
+							}).bind(this)
+						);
+					});
+				}
+
+				addArticulo(articulo) {
+					
 				}
 			}
 		</script>
