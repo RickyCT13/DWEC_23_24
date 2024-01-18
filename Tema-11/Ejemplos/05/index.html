@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 11.5</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Modificación de ejemplo 04
+            Uso de promise.all();
+            Recibe un array de promesas y devuelve un array de resultados
+            Las promesas se ejecutan en paralelo, por lo que si queremos
+            saber cuando se ejecutó cada promesa, se especifica el tiempo
+            en el mensaje.
+        */
+        function promesa(fase, tiempo) {
+            var promise = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve(`Etapa ${fase} completada a los ${tiempo}ms`);
+                }, tiempo);
+            });
+            return promise;
+        }
+        const p1 = promesa(1, 1000);
+        const p2 = promesa(2, 2000);
+        const p3 = promesa(3, 3000);
+        const p4 = promesa(4, 4000);
+        Promise.all([p1, p2, p3, p4])
+            .then(mensaje => console.log(mensaje))
+            .catch(e => console.log(`Error capturado:  ${e}`));
+
+    </script>
+</body>
+
+</html>

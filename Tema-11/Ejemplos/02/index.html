@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 11.2</title>
+</head>
+
+<body>
+    <script>
+        /* 
+            Callbacks
+            La estructura de abajo es conocida como "Callback Hell"
+            El código es poco legible o entendible al haber varias llamadas anidadas
+        */
+        setTimeout(function () {
+            console.log("Etapa 1 completada");
+            setTimeout(function () {
+                console.log("Etapa 2 completada");
+                setTimeout(function () {
+                    console.log("Etapa 3 completada");
+                    setTimeout(function () {
+                        console.log("Etapa 4 completada");
+                        // continuar indefinidamente ...
+                    }, 3000);
+                }, 3000);
+            }, 3000);
+        }, 3000);   
+    </script>
+</body>
+
+</html>

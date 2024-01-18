@@ -18,56 +18,27 @@
     <div id="datos"></div>
     <script>
         /* Averiguar como cargar nombres en select */
-        function funAjax() {
+        function funAjax(url, fun) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-
-                    let obj = JSON.parse(this.responseText);
-                    let tabla = `<table border="1">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Ciudad</th>
-                        </tr>`;
-
-                    for (const key in obj) {
-                        if (Object.hasOwnProperty.call(obj, key)) {
-                            const elemento = obj[key];
-                            tabla += `<tr>
-                            <td>${elemento.id}</td>
-                            <td>${elemento.nombre}</td>
-                            <td>${elemento.apellidos}</td>
-                            <td>${elemento.ciudad}</td>
-                            </tr>`;
-                        }
-                    }
-
-                    tabla += "</table>";
-
-                    document.getElementById("datos").innerHTML = tabla;
-
-
+                    fun(JSON.parse(this.responseText));
                 }
-            }
-            xhttp.open("GET", `datos.php`, true);
+            };
+            xhttp.open("GET", url, true);
             xhttp.send();
         }
 
-        function mostrarNombres(xhttp) {
-            let obj = JSON.parse(xhttp.responseText);
-
-            let nombres = "";
-            nombres += `<option selected disabled>Seleccione una opción</option>`
-            for (const key in obj) {
-                if (Object.hasOwnProperty.call(obj, key)) {
-                    const elemento = obj[key];
-                    nombres += `<option name="nombre" value="${elemento.nombre}">${elemento.nombre}</option>`
-                }
-            }
-            document.getElementById("nombres").innerHTML = nombres;
-
+        function mostrarNombres() {
+            funAjax('datos.php', function (datos) {
+                let nombres = "";
+                nombres += `<option selected disabled>Seleccione una opción</option>`;
+                datos.forEach(dato => {
+                    nombres += `<option name="id" value=${dato.id}>${dato.nombre}</option>`;
+                });
+                document.getElementById("nombres").innerHTML = nombres;
+            });
+            
         }
     </script>
 </body>

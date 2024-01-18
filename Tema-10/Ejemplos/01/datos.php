@@ -18,7 +18,8 @@ class Conexion {
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_PERSISTENT => false,
-                PDO::ATTR_EMULATE_PREPARES => false
+                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
             ];
 
             $this->pdo = new PDO($dsn, "root", '', $options);
@@ -28,10 +29,18 @@ class Conexion {
         }
     }
 
-    public function getDatos() {
-        $query = "SELECT * FROM datos ORDER BY id";
+    public function getDatos($id) {
+        $query = "SELECT * FROM datos";
+
+        if ($id != null) {
+            $query .= " WHERE id = :id";
+        }
 
         $pdostmt = $this->pdo->prepare($query);
+
+        if ($id != null) {
+            $pdostmt->bindParam(':id', $id, PDO::PARAM_INT);
+        }
 
         $pdostmt->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -41,7 +50,7 @@ class Conexion {
     }
 
     // Cambiar JSON que devuelve en función de si hay id en param??
-    public function devolverJSON() {
+    public function devolverJSON($id) {
         $cadenaJSON = '[';
 
         foreach ($this->getDatos()->fetchAll() as $registro) {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 11.4</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Callback Hell del ejemplo 02 resuelto con promesas
+            Modificada la promesa para admitir tiempo variable
+        */
+        function promesa(fase, tiempo) {
+            var promise = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve(`Etapa ${fase} completada a los ${tiempo}ms`);
+                }, tiempo);
+            });
+            return promise;
+        }
+        // Ejecuta promesa 1, imprime el resultado y ejecuta las siguientes promesas
+        promesa(1, 1000)
+            .then(
+                function (mensaje) {
+                    console.log(mensaje);
+                    return promesa(2, 2000);
+                })
+            .then(
+                function (mensaje) {
+                    console.log(mensaje);
+                    return promesa(3, 3000);
+                })
+            .then(
+                function (mensaje) {
+                    console.log(mensaje);
+                    return promesa(4, 4000);
+                })
+            .then(
+                function (mensaje) {
+                    console.log(mensaje);
+                })
+            .catch(e => console.log(`Error capturado:  ${e}`));
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 11.1</title>
+</head>
+
+<body>
+    <script>
+        // dato1 pertenece al hilo de runtime
+        console.log("dato1");
+        /* dato2 entra en la cola (llamada a Web API)
+            esto se ejecutará cuando ya no haya instrucciones a ejecutar
+            en runtime. (Independientemente del timeout)
+        */
+        setTimeout(function fun1() {
+            console.log("dato2")
+        }, 1000);
+        // dato3 pertenece al hilo de runtime
+        console.log("dato3");
+        /* Devuelve "dato1", "dato3", "dato2" */
+    </script>
+</body>
+
+</html>
