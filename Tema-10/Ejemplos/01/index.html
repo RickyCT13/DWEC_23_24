@@ -7,16 +7,21 @@
     <title>DWEC Tarea 1 Tema 10</title>
 </head>
 
-<body onload="mostrarNombres()">
+<body>
     <h1>Ejemplo 1 Tema 10</h1>
-    <button onclick="funAjax()">
-        Recibir datos
-    </button>
-    <select id="nombres">
+    <select id="select">
+        <option selected disabled>Seleccione una opción</option>
 
     </select>
-    <div id="datos"></div>
+
+    <div id="datos">
+
+    </div>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            mostrarNombres();
+        });
+
         /* Averiguar como cargar nombres en select */
         function funAjax(url, fun) {
             var xhttp = new XMLHttpRequest();
@@ -31,14 +36,34 @@
 
         function mostrarNombres() {
             funAjax('datos.php', function (datos) {
-                let nombres = "";
-                nombres += `<option selected disabled>Seleccione una opción</option>`;
+                let select = document.getElementById("select");
+
                 datos.forEach(dato => {
-                    nombres += `<option name="id" value=${dato.id}>${dato.nombre}</option>`;
+                    let option = document.createElement("option");
+                    option.value = dato.id;
+                    option.text = dato.nombre;
+                    select.add(option);
                 });
-                document.getElementById("nombres").innerHTML = nombres;
+                select.addEventListener("change", () => {
+                    let id = this.value;
+
+                    funAjax(`datos.php?id=${id}`, (registro) => {
+                        mostrarDatos(registro);
+                    });
+                });
             });
-            
+        }
+
+        function mostrarDatos(registro) {
+            let divDatos = document.getElementById("datos");
+
+            let tabla = `<table border="1">`;
+            for (let clave in registro) {
+                    let valor = registro[clave];
+                    tabla += `<tr><th>${clave}</th><td>${valor}</td></tr>`;
+            }
+            tabla += `</table>`;
+            divDatos.innerHTML = tabla;
         }
     </script>
 </body>

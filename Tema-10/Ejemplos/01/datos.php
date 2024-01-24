@@ -32,42 +32,32 @@ class Conexion {
     public function getDatos($id) {
         $query = "SELECT * FROM datos";
 
-        if ($id != null) {
+        if ($id !== null) {
             $query .= " WHERE id = :id";
         }
 
         $pdostmt = $this->pdo->prepare($query);
 
-        if ($id != null) {
+        if ($id !== null) {
             $pdostmt->bindParam(':id', $id, PDO::PARAM_INT);
         }
 
-        $pdostmt->setFetchMode(PDO::FETCH_ASSOC);
-
         $pdostmt->execute();
 
-        return $pdostmt;
+        return $pdostmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Cambiar JSON que devuelve en función de si hay id en param??
     public function devolverJSON($id) {
-        $cadenaJSON = '[';
 
-        foreach ($this->getDatos()->fetchAll() as $registro) {
-            $cadenaObj = '{"id":"' . $registro['id'] . '","nombre":"' . $registro['nombre'] . '","apellidos":"' . $registro['apellidos'] . '","ciudad":"' . $registro['ciudad'] . '"}, ';
-            $cadenaJSON = $cadenaJSON . $cadenaObj;
-        }
-
-        $cadenaJSON = rtrim($cadenaJSON, "\, ");
-
-        $cadenaJSON = $cadenaJSON . "]";
-
-        echo $cadenaJSON;
+        echo json_encode($this->getDatos($id));
     }
 }
 
+$id = $_GET['id'] ?? null;
+
 $conexion = new Conexion();
 
-$conexion->devolverJSON();
+$conexion->devolverJSON($id);
 
 ?>
