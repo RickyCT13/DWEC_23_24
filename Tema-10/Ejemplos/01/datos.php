@@ -7,8 +7,14 @@
 
 */
 
+/*
+    Permite solicitudes de otros dominios
+*/
 header("access-control-allow-origin: *");
 
+/*
+    Utilizaremos PDO para acceder a la base de datos.
+*/
 class Conexion {
     protected $pdo;
     public function __construct() {
@@ -29,6 +35,11 @@ class Conexion {
         }
     }
 
+    /*
+        Ejecuta una sentencia SELECT para recuperar el/los registro(s).
+        Si la id es nula, se recuperan todos los registros.
+        De lo contrario, devuelve el registro deseado.
+    */
     public function getDatos($id) {
         $query = "SELECT * FROM datos";
 
@@ -47,9 +58,10 @@ class Conexion {
         return $pdostmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Cambiar JSON que devuelve en función de si hay id en param??
+    /*
+        Devuelve el json al navegador
+    */
     public function devolverJSON($id) {
-
         echo json_encode($this->getDatos($id));
     }
 }
@@ -59,5 +71,3 @@ $id = $_GET['id'] ?? null;
 $conexion = new Conexion();
 
 $conexion->devolverJSON($id);
-
-?>

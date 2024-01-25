@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            mostrarNombres();
+            function funAjax(url, fun) {
+                $.get(url, fun)
+                    .done(response => {
+                        return response.json();
+                    }).fail(error => {
+                        console.error(error);
+                    });
+            }
+            function mostrarNombres() {
+                funAjax('datos.php', function (datos) {
+                    /*
+                        Recupera el id y el nombre de un registro para
+                        el valor y el texto de cada opción respectivamente
+                    */
+                    datos.forEach(dato => {
+                        let option = $("<option></option>").val(dato.id).text(dato.nombre);
+                        $("#select").add(option);
+                    });
+                    /* 
+                        Se recuperarán los datos de un registro cuando cambie
+                        el elemento seleccionado
+                    */
+                    $("#select").on("change", function () {
+                        funAjax(`datos.php?id=${this.value}`, function (registro) {
+                            mostrarDatos(registro);
+                        });
+                    });
+                });
+            }
+            function mostrarDatos(registro) {
+                registro = registro[0];
+
+                let divDatos = document.getElementById("datos");
+
+                let tabla = `<table border="1">`;
+
+                tabla += `<tr>
+                    <th>ID</th>
+                    <td>${registro.id}</td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td>${registro.nombre}</td>
+                </tr>
+                <tr>
+                    <th>Apellidos</th>
+                    <td>${registro.apellidos}</td>
+                </tr>
+                <tr>
+                    <th>Ciudad</th>
+                    <td>${registro.ciudad}</td>
+                </tr>`;
+                tabla += `</table>`;
+                divDatos.innerHTML = tabla;
+            }
+        });
+    </script>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 0.25em;
+        }
+    </style>
+    <title>DWEC Tarea 1 Tema 12</title>
+</head>
+
+<body>
+    <h1>Tarea 1 Tema 12</h1>
+    <select id="select">
+        <option selected disabled>Seleccione un nombre</option>
+    </select>
+    <br><br>
+
+    <div id="datos">
+        <p>Los datos se cargarán aquí...</p>
+    </div>
+</body>
+
+</html>

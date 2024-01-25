@@ -4,25 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.25em;
+        }
+    </style>
     <title>DWEC Tarea 1 Tema 10</title>
 </head>
 
 <body>
-    <h1>Ejemplo 1 Tema 10</h1>
+    <h1>Tarea 1 Tema 10</h1>
     <select id="select">
-        <option selected disabled>Seleccione una opción</option>
-
+        <option selected disabled>Seleccione un nombre</option>
     </select>
+    <br><br>
 
     <div id="datos">
-
+        <p>Los datos se cargarán aquí...</p>
     </div>
     <script>
+        /* 
+            Se añade un evento para cargar los nombres en el select
+            cuando se cargue la página 
+        */
         document.addEventListener("DOMContentLoaded", () => {
             mostrarNombres();
         });
 
-        /* Averiguar como cargar nombres en select */
+        /* 
+            Crea un objeto XMLHttpRequest y pasa la respuesta 
+            como parámetro a una función 
+        */
         function funAjax(url, fun) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -33,35 +48,66 @@
             xhttp.open("GET", url, true);
             xhttp.send();
         }
-
+        /* 
+            Se encarga de añadir las opciones a la lista desplegable
+        */
         function mostrarNombres() {
             funAjax('datos.php', function (datos) {
                 let select = document.getElementById("select");
-
+                /*
+                    Recupera el id y el nombre de un registro para
+                    el valor y el texto de cada opción respectivamente
+                */
                 datos.forEach(dato => {
                     let option = document.createElement("option");
                     option.value = dato.id;
                     option.text = dato.nombre;
                     select.add(option);
                 });
-                select.addEventListener("change", () => {
+                /* 
+                    Se recuperarán los datos de un registro cuando cambie
+                    el elemento seleccionado
+                */
+                select.addEventListener("change", function () {
                     let id = this.value;
 
-                    funAjax(`datos.php?id=${id}`, (registro) => {
+                    funAjax(`datos.php?id=${id}`, function (registro) {
                         mostrarDatos(registro);
                     });
                 });
             });
         }
 
+        /* 
+            Renderiza los datos de un registro en una tabla
+        */
         function mostrarDatos(registro) {
+            /*
+                Se hace esto porque el "servidor" devuelve un array con los registros,
+                pero en este caso sólo hay uno (el array de resultados tiene solo 1 elto.)
+            */
+            registro = registro[0];
+
             let divDatos = document.getElementById("datos");
 
             let tabla = `<table border="1">`;
-            for (let clave in registro) {
-                    let valor = registro[clave];
-                    tabla += `<tr><th>${clave}</th><td>${valor}</td></tr>`;
-            }
+
+            tabla += `<tr>
+                <th>ID</th>
+                <td>${registro.id}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>${registro.nombre}</td>
+            </tr>
+            <tr>
+                <th>Apellidos</th>
+                <td>${registro.apellidos}</td>
+            </tr>
+            <tr>
+                <th>Ciudad</th>
+                <td>${registro.ciudad}</td>
+            </tr>`;
             tabla += `</table>`;
             divDatos.innerHTML = tabla;
         }

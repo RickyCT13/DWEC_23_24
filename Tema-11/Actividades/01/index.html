@@ -8,15 +8,17 @@
         table {
             border-collapse: collapse;
         }
-        th, td {
+
+        th,
+        td {
             padding: 0.25em;
         }
     </style>
-    <title>DWEC Tarea 1 Tema 10</title>
+    <title>DWEC Tarea 1 Tema 11</title>
 </head>
 
 <body>
-    <h1>Tarea 1 Tema 10</h1>
+    <h1>Tarea 1 Tema 11</h1>
     <select id="select">
         <option selected disabled>Seleccione un nombre</option>
     </select>
@@ -34,48 +36,65 @@
             mostrarNombres();
         });
 
+        
         /* 
-            Crea un objeto XMLHttpRequest y pasa la respuesta 
-            como parámetro a una función 
-        */
-        function funAjax(url, fun) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    fun(JSON.parse(this.responseText));
-                }
-            };
-            xhttp.open("GET", url, true);
-            xhttp.send();
+        
+            FUNCIÓN AJAX SIN ASYNC/AWAIT
+
+        function funAjax(url) {
+            return fetch(url)
+                .then(response => {
+                    return response.json();
+                });
         }
+        */
+
+        /*
+            FUNCIÓN AJAX CON ASYNC/AWAIT
+        */
+        async function funAjax(url) {
+            try {
+                const response = await fetch(url);
+                const obj = await response.json();
+                return obj;
+            } catch (error) {
+                console.error("Error en la solicitud AJAX: " + error.message);
+            }
+        }
+
         /* 
             Se encarga de añadir las opciones a la lista desplegable
         */
         function mostrarNombres() {
-            funAjax('datos.php', function (datos) {
-                let select = document.getElementById("select");
-                /*
-                    Recupera el id y el nombre de un registro para
-                    el valor y el texto de cada opción respectivamente
-                */
-                datos.forEach(dato => {
-                    let option = document.createElement("option");
-                    option.value = dato.id;
-                    option.text = dato.nombre;
-                    select.add(option);
-                });
-                /* 
-                    Se recuperarán los datos de un registro cuando cambie
-                    el elemento seleccionado
-                */
-                select.addEventListener("change", function () {
-                    let id = this.value;
+            funAjax('datos.php')
+                .then(function (datos) {
+                    let select = document.getElementById("select");
+                    /*
+                        Recupera el id y el nombre de un registro para
+                        el valor y el texto de cada opción respectivamente
+                    */
+                    datos.forEach(dato => {
+                        let option = document.createElement("option");
+                        option.value = dato.id;
+                        option.text = dato.nombre;
+                        select.add(option);
+                    });
+                    /* 
+                        Se recuperarán los datos de un registro cuando cambie
+                        el elemento seleccionado
+                    */
+                    select.addEventListener("change", function () {
+                        let id = this.value;
 
-                    funAjax(`datos.php?id=${id}`, function (registro) {
-                        mostrarDatos(registro);
+                        funAjax(`datos.php?id=${id}`)
+                            .then(function (registro) {
+                                mostrarDatos(registro);
+                            })
+                            .catch(function (error) {
+                                console.error(error);
+                            });
                     });
                 });
-            });
         }
 
         /* 
