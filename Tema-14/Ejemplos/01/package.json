@@ -1,0 +1,11 @@
+{
+  "name": "holamundo",
+  "version": "1.0.0",
+  "description": "Mi primer proyecto con Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "Ricardo Moreno Cantea",
+  "license": "ISC"
+}
