@@ -6,45 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-        $(function () {
-            mostrarNombres();
-            function funAjax(url, fun) {
-                $.get(url, fun)
-                    .done(response => {
-                        return response.json();
-                    }).fail(error => {
-                        console.error(error);
-                    });
-            }
-            function mostrarNombres() {
-                funAjax('datos.php', function (datos) {
-                    /*
-                        Recupera el id y el nombre de un registro para
-                        el valor y el texto de cada opción respectivamente
-                    */
-                    datos.forEach(dato => {
-                        let option = $("<option></option>").val(dato.id).text(dato.nombre);
-                        $("#select").add(option);
-                    });
-                    /* 
-                        Se recuperarán los datos de un registro cuando cambie
-                        el elemento seleccionado
-                    */
-                    $("#select").on("change", function () {
-                        funAjax(`datos.php?id=${this.value}`, function (registro) {
-                            mostrarDatos(registro);
-                        });
+        function funAjax(url, fun) {
+            $.get(url, fun)
+                .done(response => {
+                    return response.json();
+                }).fail(error => {
+                    console.error(error);
+                });
+        }
+        function mostrarNombres() {
+            funAjax('datos.php', function (datos) {
+                /*
+                    Recupera el id y el nombre de un registro para
+                    el valor y el texto de cada opción respectivamente
+                */
+                /*datos.forEach((dato) => {
+                    $("#select").append(`<option value="${dato.id}">${dato.nombre}</option>`);
+                });*/
+                for (const clave in datos) {
+                    if (Object.hasOwnProperty.call(datos, clave)) {
+                        const dato = datos[clave];
+                        $("#select").append(`<option value="${dato.id}">${dato.nombre}</option>`);
+                    }
+                }
+
+                /* 
+                    Se recuperarán los datos de un registro cuando cambie
+                    el elemento seleccionado
+                */
+                $("#select").on("change", function () {
+                    funAjax(`datos.php?id=${this.value}`, function (registro) {
+                        mostrarDatos(registro);
                     });
                 });
-            }
-            function mostrarDatos(registro) {
-                registro = registro[0];
+            });
+        }
+        function mostrarDatos(registro) {
+            registro = registro[0];
 
-                let divDatos = document.getElementById("datos");
-
-                let tabla = `<table border="1">`;
-
-                tabla += `<tr>
+            $("#datos").append(`<table border="1"><tr>
                     <th>ID</th>
                     <td>${registro.id}</td>
                 </tr>
@@ -59,10 +59,10 @@
                 <tr>
                     <th>Ciudad</th>
                     <td>${registro.ciudad}</td>
-                </tr>`;
-                tabla += `</table>`;
-                divDatos.innerHTML = tabla;
-            }
+                </tr></table>`);
+        }
+        $(function () {
+            mostrarNombres();
         });
     </script>
     <style>
