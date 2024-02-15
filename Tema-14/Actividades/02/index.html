@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>DWEC Tarea 2 Tema 14</title>
+    <script defer>
+        $(function () {
+            /*
+                Añade evento al botón para obtener la promesa
+            */
+            $("#botonRes").on("click", function () {
+                fetch('/pagAjax')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Error en la solicitud");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        $("#contenido").html(`<p>
+                            Hola ${data.nombre}
+                            </p>`);
+                    }).catch(err => {
+                        console.error(err);
+                    });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <main class="container">
+        <h1>Index.html leído</h1>
+        <button class="container__button" id="botonRes">Pulsar</button>
+        <section class="container__dateSection" id="contenido">
+
+        </section>
+    </main>
+
+</body>
+
+</html>
