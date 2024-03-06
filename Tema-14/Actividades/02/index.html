@@ -13,24 +13,20 @@
     <title>DWEC Tarea 2 Tema 14</title>
     <script defer>
         $(function () {
-            /*
-                Añade evento al botón para obtener la promesa
-            */
-            $("#botonRes").on("click", function () {
-                fetch('/pagAjax')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("Error en la solicitud");
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        $("#contenido").html(`<p>
-                            Hola ${data.nombre}
-                            </p>`);
-                    }).catch(err => {
-                        console.error(err);
+            $.ajax({
+                url: '/get',
+                type: 'GET',
+                success: function(response) {
+                    /*
+                        Tabla
+                    */
+                    response.forEach((registro) => {
+                        $("#cuerpoTabla").append(`<tr>
+                            <td>${registro.nombre}</td>
+                            <td>${registro.apellidos}</td>
+                            </tr>`);
                     });
+                }
             });
         });
     </script>
@@ -38,11 +34,22 @@
 
 <body>
     <main class="container">
-        <h1>Index.html leído</h1>
-        <button class="container__button" id="botonRes">Pulsar</button>
-        <section class="container__dateSection" id="contenido">
+        <h1>Lista de personas</h1>
+        <form>
 
-        </section>
+        </form>
+        <table class="container__tablaPersonas">
+            <thead>
+                <th>Nombre</th>
+                <th>Apellido(s)</th>
+            </thead>
+            <tbody id="cuerpoTabla">
+                <tr>
+                    <td>Ejemplo</td>
+                    <td>olpmejE</td>
+                </tr>
+            </tbody>
+        </table>
     </main>
 
 </body>

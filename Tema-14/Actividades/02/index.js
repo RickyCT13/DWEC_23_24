@@ -5,15 +5,16 @@ import { MongoClient, ObjectId } from 'mongodb';
 import express from 'express';
 import path from 'path';
 
-/*
+
 const app = express();
 const router = express.Router();
 var __dirname = path.resolve(); //Resuelve y adapta para módulos ES6
-*/
+
 /*
     Conexión al cluster
 */
-const uri;
+const uri = "mongodb+srv://ricardomorenocantea13:ILIgRjGFH84Nlsvq@cluster0.cj2exnu.mongodb.net/?retryWrites=true&w=majority";
+
 
 
 async function run(fun) {
@@ -36,48 +37,67 @@ async function run(fun) {
         await client.close();
     }
 }
-async function getAll() {
-    run(async function (client, db, collection) {
+function getAll() {
+    run(async (client, db, collection) => {
         /*
             Utilizamos "let" en vez de "const" para que se actualicen
             los valores
         */
         let queryAll = await collection.find();
         let allValues = await queryAll.toArray();
-        console.log(allValues);
+        return allValues;
     });
 }
-async function create(registro) {
-    run(async function (client, db, collection) {
+
+function createDocument(registro) {
+    run(async (client, db, collection) => {
         if (registro != null) {
             await collection.insertOne(registro);
         }
     });
 }
-getAll();
-create({
-    nombre: "John",
-    apellido: "PHP"
+
+function deleteDocument(id) {
+    run(async (client, db, collection) => {
+        await collection.deleteOne({ _id: id});
+    });
+}
+
+
+/*getAll();
+createDocument({
+    nombre: "a",
+    apellido: "b"
 });
-getAll();
+getAll();*/
 
 
 /*
     Al entrar en el directorio raíz, muestra index.html
 */
-/*router.get('/', function (req, res) {
+router.get('/', function (req, res) {
+    /*
+        Cargar index.html
+    */
     res.sendFile(path.join(__dirname + '/index.html'));
+    /*
+        Devolver datos
+    */
 
 });
 
 /*
     Manejo de solicitud AJAX
 */
-/*router.get('/get', function (req, res) {
-    
+router.get('/get', function (req, res) {
+    res.json(
+        {
+            datos: getAll()
+        }
+    );
 });
 
 app.use('/', router);
 app.use(express.static(__dirname));//IMPORTANTE carga archivos js,css, etc.., cargados en los html desde directorio
 app.listen(3000);
-console.log('Escuchando en puerto 3000');*/
+console.log('Escuchando en puerto 3000');
