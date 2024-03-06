@@ -13,7 +13,7 @@ var __dirname = path.resolve(); //Resuelve y adapta para módulos ES6
 /*
     Conexión al cluster
 */
-const uri = "mongodb+srv://ricardomorenocantea13:ILIgRjGFH84Nlsvq@cluster0.cj2exnu.mongodb.net/?retryWrites=true&w=majority";
+const uri;
 
 
 async function run(fun) {
