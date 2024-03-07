@@ -13,21 +13,11 @@
     <title>DWEC Tarea 2 Tema 14</title>
     <script defer>
         $(function () {
-            $.ajax({
-                url: '/get',
-                type: 'GET',
-                success: function(response) {
-                    /*
-                        Tabla
-                    */
-                    response.forEach((registro) => {
-                        $("#cuerpoTabla").append(`<tr>
-                            <td>${registro.nombre}</td>
-                            <td>${registro.apellidos}</td>
-                            </tr>`);
-                    });
-                }
-            });
+            fetch('/get').then(response => response.json()).then(data => {
+                for (let registro of data) {
+                    console.log(registro);
+                };
+            }).catch(err => console.error(err));
         });
     </script>
 </head>

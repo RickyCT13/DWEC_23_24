@@ -14,11 +14,10 @@ var __dirname = path.resolve(); //Resuelve y adapta para módulos ES6
     Conexión al cluster
 */
 const uri = "mongodb+srv://ricardomorenocantea13:ILIgRjGFH84Nlsvq@cluster0.cj2exnu.mongodb.net/?retryWrites=true&w=majority";
-
+const client = new MongoClient(uri);
 
 
 async function run(fun) {
-    const client = new MongoClient(uri);
     try {
         await client.connect();
         const db = client.db('dwec-tema-14');
@@ -28,7 +27,10 @@ async function run(fun) {
             Callback que permitirá a otras funciones
             usar el mongoclient.
         */
-        await fun(client, db, collection).catch(error => console.error(error));
+        return await fun(client, db, collection).catch(error => console.error(error));
+        /*let queryAll = collection.find({});
+        let allValues = await queryAll.toArray();
+        return allValues;*/
     }
     finally {
         /*
@@ -38,7 +40,7 @@ async function run(fun) {
     }
 }
 function getAll() {
-    run(async (client, db, collection) => {
+    let allValues = run(async (client, db, collection) => {
         /*
             Utilizamos "let" en vez de "const" para que se actualicen
             los valores
@@ -47,6 +49,7 @@ function getAll() {
         let allValues = await queryAll.toArray();
         return allValues;
     });
+    return allValues;
 }
 
 function createDocument(registro) {
@@ -59,7 +62,7 @@ function createDocument(registro) {
 
 function deleteDocument(id) {
     run(async (client, db, collection) => {
-        await collection.deleteOne({ _id: id});
+        await collection.deleteOne({ _id: id });
     });
 }
 
@@ -75,27 +78,38 @@ getAll();*/
 /*
     Al entrar en el directorio raíz, muestra index.html
 */
+
 router.get('/', function (req, res) {
+    
+    //res.sendFile(path.join(__dirname, '/index.html'));
+});
+
+router.get('/get', async function (req, res) {
     /*
         Cargar index.html
     */
-    res.sendFile(path.join(__dirname + '/index.html'));
+    //res.sendFile(path.join(__dirname + '/index.html'));
     /*
         Devolver datos
     */
+    /*getAll().then(data => {
+        res.json({
+            data: data
+        });
+    }).catch(err => console.error(err));*/
 
 });
 
 /*
     Manejo de solicitud AJAX
 */
-router.get('/get', function (req, res) {
+/*router.get('/get', function (req, res) {
     res.json(
         {
             datos: getAll()
         }
     );
-});
+});*/
 
 app.use('/', router);
 app.use(express.static(__dirname));//IMPORTANTE carga archivos js,css, etc.., cargados en los html desde directorio
