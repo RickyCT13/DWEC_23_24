@@ -29,11 +29,10 @@ class Costes {
                         $("#datosTabla").append(`<tr><th>${obj.costes[index]}</th><td>${obj.costes[element]}</td></tr>`)
                     });
                 });*/
-                var destino = url;
                 var data = {
                     ID: $("#ID").val()
                 };
-                const response = yield fetch(destino, {
+                const response = yield fetch(url, {
                     method: "POST",
                     body: JSON.stringify(data),
                     headers: {
@@ -42,9 +41,12 @@ class Costes {
                 });
                 const obj = yield response.json();
                 $("#datosTabla").html("");
-                obj.foreach((element, index) => {
-                    $("#datosTabla").append(`<tr><th>${element}</th><td>${obj[index]}</td></tr>`);
-                });
+                for (const key in obj) {
+                    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                        const value = obj[key];
+                        $("#datosTabla").append(`<tr><th>${key}</th><td>${value}</td></tr>`);
+                    }
+                }
             }
             catch (error) {
                 $("#datosTabla").html('El ID introducido no existe');

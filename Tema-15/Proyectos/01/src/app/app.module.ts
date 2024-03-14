@@ -23,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './shared/services/auth.service';
 import { ReadWriteDataComponent } from './components/read-write-data/read-write-data.component';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { FormsModule } from '@angular/forms';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

@@ -21,11 +21,10 @@ class Costes{
                 });
             });*/
 
-            var destino = url;
 			var data = {
 				ID: $("#ID").val()
 			};
-			const response = await fetch(destino, {
+			const response = await fetch(url, {
 				method: "POST",
 				body: JSON.stringify(data),
 				headers: {
@@ -34,11 +33,14 @@ class Costes{
 			});
 			const obj = await response.json();
 			$("#datosTabla").html("");
-			obj.foreach((element: any, index: any) => {
-				$("#datosTabla").append(
-					`<tr><th>${element}</th><td>${obj[index]}</td></tr>`
-				);
-			});
+			for (const key in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                    const value = obj[key];
+                    $("#datosTabla").append(
+                        `<tr><th>${key}</th><td>${value}</td></tr>`
+                    );
+                }
+            }
         }catch(error:any){
             $("#datosTabla").html('El ID introducido no existe');
             console.log( error.message);
