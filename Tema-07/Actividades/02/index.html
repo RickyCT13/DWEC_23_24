@@ -33,6 +33,7 @@
             padding: 0.25em 0.5em;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
 
@@ -50,7 +51,7 @@
             <div class="mb-3">
                 <div class="mb-3">
                     <label class="form-label">Usuario</label>
-                    <input class="form-control" type="text" id="userName" required>
+                    <input class="form-control" type="text" id="userName" placeholder="Usuario" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Contraseña</label>
@@ -59,7 +60,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary" type="submit">Iniciar sesión</button>
+            <button class="btn btn-primary" onclick="authenticate()" type="submit">Iniciar sesión</button>
 
 
         </form>
@@ -94,7 +95,7 @@
             }
 
             getPassword() {
-                return this.password;
+                return this.#password;
             }
 
             setUserName(userName) {
@@ -136,19 +137,15 @@
                     else {
                         password.setCustomValidity("");
 
-                        if (this.#users.findIndex((user) => user.getUserName() == userName.value && user.getPassword() == password.value)) {
+                        if (this.#users.find((user) => user.getUserName() === userName.value && user.getPassword() === password.value)) {
                             alert("Sesión iniciada con éxito");
                         }
                         else {
-                            alert("Error");
+                            alert("Error. El usuario o la contraseña no coinciden.");
                         }
                     }
                 });
 
-
-            }
-
-            authenticate() {
 
             }
 
@@ -161,8 +158,6 @@
         );
 
         login.validatePassword();
-
-
 
     </script>
 

@@ -8,43 +8,95 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        main {
+            max-width: 600px;
+            margin: 2em auto;
+            padding: 2em;
+            border: 1px solid grey;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 0.75em 1.5em;
+            background-color: #167bce;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: cornflowerblue;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>DWEC Tarea 2 Tema 14</title>
-    <script defer>
-        $(function () {
-            /*
-                Añade evento al botón para obtener la promesa
-            */
-            $("#botonRes").on("click", function () {
-                fetch('/pagAjax')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("Error en la solicitud");
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        $("#contenido").html(`<p>
-                            Hola ${data.nombre}
-                            </p>`);
-                    }).catch(err => {
-                        console.error(err);
-                    });
-            });
-        });
-    </script>
+
 </head>
 
 <body>
     <main class="container">
-        <h1>Index.html leído</h1>
-        <button class="container__button" id="botonRes">Pulsar</button>
-        <section class="container__dateSection" id="contenido">
+        <h1>Añadir persona</h1>
 
-        </section>
+        <form id="formulario">
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+
+            <label for="apellidos">Apellido(s):</label>
+            <input type="text" id="apellidos" required>
+
+            <button id="botonEnviar">Añadir</button>
+        </form>
+
+        <br>
+
+        <h2>Listado de personas</h2>
+        <table id="datos">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido(s)</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpoTabla">
+
+            </tbody>
+        </table>
     </main>
-
+    <script src="script.js" defer></script>
 </body>
 
 </html>

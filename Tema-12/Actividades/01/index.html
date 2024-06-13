@@ -4,25 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        function funAjax(url, fun) {
-            $.get(url, fun)
-                .done(response => {
-                    return response.json();
-                }).fail(error => {
-                    console.error(error);
-                });
+        function funAjax(url) {
+            return $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json"
+            });
         }
+
         function mostrarNombres() {
-            funAjax('datos.php', function (datos) {
+            funAjax('datos.php').then(function (datos) {
                 /*
                     Recupera el id y el nombre de un registro para
                     el valor y el texto de cada opción respectivamente
                 */
-                /*datos.forEach((dato) => {
-                    $("#select").append(`<option value="${dato.id}">${dato.nombre}</option>`);
-                });*/
                 for (const clave in datos) {
                     if (Object.hasOwnProperty.call(datos, clave)) {
                         const dato = datos[clave];
@@ -35,7 +32,7 @@
                     el elemento seleccionado
                 */
                 $("#select").on("change", function () {
-                    funAjax(`datos.php?id=${this.value}`, function (registro) {
+                    funAjax(`datos.php?id=${this.value}`).then (function (registro) {
                         mostrarDatos(registro);
                     });
                 });
@@ -44,7 +41,7 @@
         function mostrarDatos(registro) {
             registro = registro[0];
 
-            $("#datos").append(`<table border="1"><tr>
+            $("#datos").html(`<table border="1"><tr>
                     <th>ID</th>
                     <td>${registro.id}</td>
                 </tr>
