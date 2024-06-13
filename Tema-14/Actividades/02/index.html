@@ -63,14 +63,46 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>DWEC Tarea 2 Tema 14</title>
+<<<<<<< HEAD
 
+=======
+    <script defer>
+        $(function () {
+            fetch('/get').then(response => response.json()).then(data => {
+                for (let registro of data) {
+                    console.log(registro);
+                };
+            }).catch(err => console.error(err));
+        });
+    </script>
+>>>>>>> 8265eb74f0eb42bf749108a437fa0a9db2980167
 </head>
 
 <body>
     <main class="container">
+<<<<<<< HEAD
         <h1>Añadir persona</h1>
 
         <form id="formulario">
+=======
+        <h1>Lista de personas</h1>
+        <form>
+
+        </form>
+        <table class="container__tablaPersonas">
+            <thead>
+                <th>Nombre</th>
+                <th>Apellido(s)</th>
+            </thead>
+            <tbody id="cuerpoTabla">
+                <tr>
+                    <td>Ejemplo</td>
+                    <td>olpmejE</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+>>>>>>> 8265eb74f0eb42bf749108a437fa0a9db2980167
 
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" required>
